@@ -287,12 +287,16 @@ void push_media (struct tgl_message_media *M) {
     lua_add_string_field ("type", "photo");
     lua_add_string_field ("caption", M->caption);
     break;
+  case tgl_message_media_video:
+    lua_newtable (luaState);
+    lua_add_string_field ("type", "video");
+    lua_add_string_field ("caption", M->caption);
+  break;
   case tgl_message_media_document:
   case tgl_message_media_audio:
-  case tgl_message_media_video:
   case tgl_message_media_document_encr:
     lua_newtable (luaState);
-    lua_add_string_field ("type", "document");
+    lua_add_string_field ("type", "document1");
     break;
   case tgl_message_media_unsupported:
     lua_newtable (luaState);
