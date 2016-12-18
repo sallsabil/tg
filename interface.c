@@ -3856,9 +3856,11 @@ void print_media (struct in_ev *ev, struct tgl_message_media *M) {
         mprintf (ev, " %s", M->caption);
       }
       return;
+    case tgl_message_media_video:
+	mprintf (ev, "video");
+	return;
     case tgl_message_media_document:
     case tgl_message_media_audio:
-    case tgl_message_media_video:
       mprintf (ev, "[");
       assert (M->document);
       if (M->document->flags & TGLDF_IMAGE) {
@@ -3870,7 +3872,7 @@ void print_media (struct in_ev *ev, struct tgl_message_media *M) {
       } else if (M->document->flags & TGLDF_STICKER) {
         mprintf (ev, "sticker");
       } else {
-        mprintf (ev, "document");
+        mprintf (ev, "document1");
       }
 
       if (M->document->caption && strlen (M->document->caption)) {
