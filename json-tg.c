@@ -247,7 +247,7 @@ json_t *json_pack_media (struct tgl_message_media *M) {
       } else {
     assert (json_object_set (res, "type", json_string ("document")) >= 0);
     if (M->document->caption) {
-      assert (json_object_set (res, "caption", json_string (M->document->caption)) >= 0);
+      assert (json_object_set (res, "caption", json_string (M->document->flags)) >= 0);
     }
       }
 	break;
