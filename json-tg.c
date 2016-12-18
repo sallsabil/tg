@@ -234,10 +234,33 @@ json_t *json_pack_media (struct tgl_message_media *M) {
       assert (json_object_set (res, "caption", json_string (M->caption)) >= 0);
     }
 	break;
-  case tgl_message_media_document:
   case tgl_message_media_audio:
+    assert (json_object_set (res, "type", json_string ("audio")) >= 0);
+    if (M->caption) {
+      assert (json_object_set (res, "caption", json_string (M->caption)) >= 0);
+    }
+  break;
+  case tgl_message_media_sticker:
+    assert (json_object_set (res, "type", json_string ("sticker")) >= 0);
+  break;
+  case tgl_message_media_voice:
+    assert (json_object_set (res, "type", json_string ("voice")) >= 0);
+    if (M->caption) {
+      assert (json_object_set (res, "caption", json_string (M->caption)) >= 0);
+    }
+  break;
+  case tgl_message_media_voice:
+    assert (json_object_set (res, "type", json_string ("voice")) >= 0);
+    if (M->caption) {
+      assert (json_object_set (res, "caption", json_string (M->caption)) >= 0);
+    }
+  break;
+  case tgl_message_media_document:
   case tgl_message_media_document_encr:
-    assert (json_object_set (res, "type", json_string ("document1")) >= 0);
+    assert (json_object_set (res, "type", json_string ("document")) >= 0);
+    if (M->caption) {
+      assert (json_object_set (res, "caption", json_string (M->caption)) >= 0);
+    }
     break;
   case tgl_message_media_unsupported:
     assert (json_object_set (res, "type", json_string ("unsupported")) >= 0);
