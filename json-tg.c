@@ -220,7 +220,7 @@ json_t *json_pack_updates (unsigned flags) {
 
 json_t *json_pack_media (struct tgl_message_media *M) {
   json_t *res = json_object ();
-
+  assert (M);
   switch (M->type) {
   case tgl_message_media_photo:
     assert (json_object_set (res, "type", json_string ("photo")) >= 0);
@@ -235,9 +235,10 @@ json_t *json_pack_media (struct tgl_message_media *M) {
     }
 	break;
   case tgl_message_media_audio:
+  assert (M->audio);
     assert (json_object_set (res, "type", json_string ("audio")) >= 0);
-    if (M->caption) {
-      assert (json_object_set (res, "caption", json_string (M->caption)) >= 0);
+    if (M->audio->caption) {
+      assert (json_object_set (res, "caption", json_string (M->audio->caption)) >= 0);
     }
   break;
   case tgl_message_media_document:
@@ -247,7 +248,7 @@ json_t *json_pack_media (struct tgl_message_media *M) {
       } else {
     assert (json_object_set (res, "type", json_string ("document")) >= 0);
     if (M->document->caption) {
-      assert (json_object_set (res, "caption", json_string (M->document->flags)) >= 0);
+      assert (json_object_set (res, "caption", json_string (M->document->caption)) >= 0);
     }
       }
 	break;
