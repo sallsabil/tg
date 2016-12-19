@@ -235,26 +235,37 @@ json_t *json_pack_media (struct tgl_message_media *M) {
     }
 	break;
   case tgl_message_media_audio:
-    assert (json_object_set (res, "type", json_string ("voice")) >= 0);
-    if (M->caption) {
-      assert (json_object_set (res, "caption", json_string (M->caption)) >= 0);
+    assert (json_object_set (res, "type", json_string ("audio")) >= 0);
+    if (M->document->caption) {
+      assert (json_object_set (res, "caption", json_string (M->document->caption)) >= 0);
     }
   break;
   case tgl_message_media_document:
       assert (M->document);
  if (M->document->flags & TGLDF_STICKER) {
         assert (json_object_set (res, "type", json_string ("sticker")) >= 0);
-      } else {
+      } 
+      else if (M->document->flags & TGLDF_VOICE) {
+        assert (json_object_set (res, "type", json_string ("voice")) >= 0);
+      }
+    if (M->document->caption) {
+      assert (json_object_set (res, "caption", json_string (M->document->caption)) >= 0);
+    }
+	  else {
     assert (json_object_set (res, "type", json_string ("document")) >= 0);
-    if (M->document->mime_type) {
-      assert (json_object_set (res, "caption", json_string (M->document->mime_type)) >= 0);
+    if (M->document->caption) {
+      assert (json_object_set (res, "caption", json_string (M->document->caption)) >= 0);
     }
       }
 	break;
   case tgl_message_media_document_encr:	  
 if (M->encr_document->flags & TGLDF_STICKER) {
         assert (json_object_set (res, "type", json_string ("sticker")) >= 0);
-      } else {
+      }
+      else if (M->encr_document->flags & TGLDF_VOICE) {
+        assert (json_object_set (res, "type", json_string ("voice")) >= 0);
+      }
+	  else {
     assert (json_object_set (res, "type", json_string ("document")) >= 0);
     if (M->encr_document->caption) {
       assert (json_object_set (res, "caption", json_string (M->encr_document->caption)) >= 0);
